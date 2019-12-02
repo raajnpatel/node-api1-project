@@ -11,7 +11,8 @@ server.get('/', (req, res) => {
     res.send({api:'up and running'});
 });
 
-// GET
+// **** /api/users ****
+
 server.get(`/api/users`, (req, res) => {
     db.find()
         .then(users =>{
@@ -27,6 +28,35 @@ server.get(`/api/users`, (req, res) => {
             }
         )
 });
+
+server.post('/api/users', (req, res) => {
+    const { name, bio } = req.body;
+    console.log(req.body);
+    if(!name || !bio) {
+        res
+            .status(400)
+            .json({errorMessage:"Please provide name and bio for the user."})
+    }
+    db.insert({name, bio})
+        .then(idObj =>
+            db.findById(idObj)
+                .then(user => {
+                    res
+                        .status(201)
+                        .json(user)
+                })
+            .catch(error => {
+                console.log('error on POST', error);
+                res
+                    .status(500)
+                    .json({error:"There was an error while saving the user to the database"});
+            }))
+    });
+
+// **** /api/users ****
+
+
+// **** /api/users/:id ****
 
 server.get(`/api/users/:id`, (req, res) => {
     const id = req.params.id;
@@ -50,3 +80,6 @@ server.get(`/api/users/:id`, (req, res) => {
                     .json({error: "The user information could not be retrieved."});
         })
 });
+
+
+// **** /api/users/:id ****
