@@ -17,7 +17,7 @@ server.get(`/api/users`, (req, res) => {
         .then(users =>{
             res
                 .status(200)
-                .json(users);
+                .json(users)
         })
         .catch( error => {
                 console.log('error on GET', error);
@@ -26,4 +26,27 @@ server.get(`/api/users`, (req, res) => {
                     .json({error:"The users information could not be retrieved."})
             }
         )
+});
+
+server.get(`/api/users/:id`, (req, res) => {
+    const id = req.params.id;
+    db.findById(id)
+        .then( user => {
+            // console.log(user);
+            if(user) {
+                res
+                    .status(200)
+                    .json(user)
+            } else {
+                res
+                    .status(404)
+                    .json({error:"The user with the specified ID does not exist."})
+            }
+        })
+        .catch( error => {
+            console.log('error on GET by ID', error);
+                res
+                    .status(500)
+                    .json({error: "The user information could not be retrieved."});
+        })
 });
