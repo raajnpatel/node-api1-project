@@ -59,7 +59,7 @@ server.post('/api/users', (req, res) => {
 // **** /api/users/:id ****
 
 server.get(`/api/users/:id`, (req, res) => {
-    const id = req.params.id;
+    const { id } = req.params;
     db.findById(id)
         .then( user => {
             // console.log(user);
@@ -77,9 +77,32 @@ server.get(`/api/users/:id`, (req, res) => {
             console.log('error on GET by ID', error);
                 res
                     .status(500)
-                    .json({error: "The user information could not be retrieved."});
+                    .json({error: "The user information could not be retrieved."})
         })
 });
 
+
+server.delete(`/api/users/:id`, (req, res) => {
+    const { id } = req.params;
+    db.remove(id)
+        .then(deleted => {
+            if(deleted) {
+                res
+                    .status(204)
+                    .end()
+            } else {
+                res
+                    .status(404)
+                    .json({message:"The user with the specified ID does not exist."})
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            res
+                .status(500)
+                .json({error:"The user could not be removed"})
+            }
+        )
+});
 
 // **** /api/users/:id ****
