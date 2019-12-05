@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin-top: 4vh;
 }
 
 .App-logo {
@@ -19,4 +20,20 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.addToList {
+  display: flex;
+  flex-direction: column;
+  border: 1px black solid;
+  max-width: 20vw;
+  padding: 2%;
+  margin: 0 auto;
+}
+
+.addToList form {
+  display: flex;
+  flex-direction: column;
+  max-width: 30vw;
+  margin: 0 auto;
 }

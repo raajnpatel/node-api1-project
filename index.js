@@ -6,7 +6,7 @@ const cors = require('cors');
 server.use(express.json());
 server.use(cors());
 
-const port = 4444;
+const port = process.env.PORT || 4444;
 server.listen(port, () => console.log(`\n** API running on port ${port} **\n`));
 
 server.get('/', (req, res) => {

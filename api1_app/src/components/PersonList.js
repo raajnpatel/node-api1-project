@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PersonCard from "./PersonCard";
+import {Form, TextArea} from "semantic-ui-react";
 
 const PersonList = () => {
     const [personList, setPersonList] = useState([]);
@@ -21,6 +22,17 @@ const PersonList = () => {
             .then(res => console.log(res) || setPersonList(res.data))
             .catch(err => console.log(err.response));
     };
+
+  const editPerson = id => {
+    axios
+      .get(`http://localhost:4444/api/users/${id}`)
+      .then(res => console.log(res) || setPerson(res.data))
+      .catch(err => console.log(err.response));
+    // axios
+    //   .put(`http://localhost:4444/api/users/${id}`)
+    //   .then(res => console.log(res) || setPersonList(res.data))
+    //   .catch(err => console.log(err.response));
+  };
 
     const deletePerson = id => {
         window.location.reload(true);
@@ -47,12 +59,14 @@ const PersonList = () => {
                     value={person.name}
                     onChange={handleChange}
                 />
-                    <input
-                        name = "bio"
-                        placeholder="bio"
-                        value={person.bio}
-                        onChange={handleChange}
+                  <Form>
+                    <TextArea
+                      name = "bio"
+                      placeholder="bio"
+                      value={person.bio}
+                      onChange={handleChange}
                     />
+                  </Form>
                     <button type="submit">Add Person</button>
                 </form>
             </div>
@@ -65,6 +79,7 @@ const PersonList = () => {
                             key={person.id}
                             person={person}
                             deletePerson={deletePerson}
+                            editPerson={editPerson}
                         />
                     </div>
                 )

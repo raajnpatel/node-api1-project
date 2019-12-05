@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Form, TextArea} from "semantic-ui-react";
 
 const AddPerson = (addPerson) => {
     const [person, setPerson] = useState({name:"", bio:""});
@@ -20,12 +21,14 @@ const AddPerson = (addPerson) => {
                         value={person.name}
                         onChange={handleChange}
                     />
-                    <input
-                        name = "bio"
-                        placeholder="bio"
-                        value={person.bio}
-                        onChange={handleChange}
-                    />
+                    <Form>
+                      <TextArea
+                          name = "bio"
+                          placeholder="bio"
+                          value={person.bio}
+                          onChange={handleChange}
+                      />
+                    </Form>
                     <button type="submit">Add Person</button>
                 </form>
             </div>
