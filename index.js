@@ -10,7 +10,7 @@ const port = process.env.PORT || 4444;
 server.listen(port, () => console.log(`\n** API running on port ${port} **\n`));
 
 server.get('/', (req, res) => {
-    res.send({api:'up and running'});
+    res.send({api:`up and running on port ${port}`});
 });
 
 // **** /api/users ****
